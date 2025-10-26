@@ -1,0 +1,24 @@
+@use 'sass:map';
+@use '../../styles/variables' as v;
+
+.page {
+  &__container {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+  }
+
+  &__aside-wrapper {
+    flex: 0 0 358px;
+    border-top: 1px solid map.get(v.$color, grey, 200);
+  }
+
+  &__aside {
+    position: sticky;
+    top: 0;
+  }
+
+  &__content-wrapper {
+    flex: 0 1 812px;
+  }
+}

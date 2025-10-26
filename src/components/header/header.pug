@@ -1,0 +1,13 @@
+mixin header
+  header.header.js-header
+    .container.header__container
+      .header__wrapper
+        .header__col
+          a.header__title-wrapper(href='/')
+            h1.title.title--type_h1.header__title
+              span Toporkov Roman,
+              span Middle Frontend Developer
+
+        .header__col
+          +button()(href='/about' class='header__about-link')
+            span About

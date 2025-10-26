@@ -1,0 +1,13 @@
+@use '../../styles/mixins' as m;
+
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: 37px;
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+}

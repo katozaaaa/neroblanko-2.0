@@ -1,0 +1,7 @@
+@use 'sass:map';
+@use '../../styles/variables' as v;
+
+.section {
+  padding-block: 30px 80px;
+  border-top: 1px solid map.get(v.$color, grey, 200);
+}

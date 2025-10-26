@@ -1,0 +1,155 @@
+@use 'sass:map';
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.experience {
+  display: flex;
+  flex-direction: column;
+  gap: 37px;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 30px;
+    padding-block: 20px 50px;
+    width: 100%;
+    border-top: 0.5px solid map.get(v.$color, grey, 200);
+  }
+
+  &__info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__company-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    color: map.get(v.$color, grey, 100);
+  }
+
+  &__duties {
+    flex: 0 0 381px;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    list-style-type: none;
+  }
+
+  &__dutie {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.5em;
+    font-family: map.get(v.$font-family, secondary);
+
+    @include m.bullet;
+  }
+}
+
+.skills {
+  display: flex;
+  flex-direction: column;
+  gap: 37px;
+
+  &__groups {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px 37px;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  &__group-title {
+    color: map.get(v.$color, grey, 100);
+    @include m.font-styles(body);
+  }
+
+  &__group-skills {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.5em;
+
+    @include m.bullet;
+  }
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 37px;
+
+  &__list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    list-style-type: none;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+.education {
+  display: flex;
+  flex-direction: column;
+  gap: 37px;
+
+  &__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 37px;
+  }
+
+  &__spec {
+    color: map.get(v.$color, grey, 100);
+  }
+}
+
+.recommendations {
+  display: flex;
+  flex-direction: column;
+  gap: 37px;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 37px;
+    list-style-type: none;
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 37px;
+  }
+
+  &__item-recommender-post {
+    color: map.get(v.$color, grey, 100);
+  }
+}

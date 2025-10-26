@@ -1,0 +1,41 @@
+@use 'sass:map';
+@use '../../styles/variables' as v;
+
+.header {
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 50px;
+    padding-bottom: 160px;
+  }
+
+  &__col {
+    display: flex;
+
+    &:nth-child(1) {
+      flex: 0 0 358px;
+    }
+
+    &:nth-child(2) {
+      flex: 0 1 812px;
+      justify-content: flex-end;
+    }
+  }
+
+  &__title-wrapper {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &__title {
+    span {
+      display: block;
+
+      &:nth-child(2) {
+        color: map.get(v.$color, grey, 100);
+      }
+    }
+  }
+}

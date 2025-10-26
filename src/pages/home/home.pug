@@ -1,0 +1,170 @@
+include src/components/_index.pug
+
+-
+  const data = {
+    experience: [
+      {
+        title: 'Senior Producer',
+        company: 'Creative Agency XYZ',
+        link: '/',
+        period: 'June 2022 – Present',
+        location: 'Remote & New York, NY ',
+        duties: [
+          'Seamlessly facilitate diverse creative experiences: from immersive installations to cinematic narratives. A catalyst for collaboration across all mediums.',
+          'Clients include: Lunethra, Driftwell, Clyra, Forgekind and more.'
+        ],
+      },
+      {
+        title: 'Senior Producer',
+        company: 'Pixel Studios',
+        link: '/',
+        period: 'December 2021 - June 2022',
+        location: 'New York, NY',
+        duties: [
+          'Orchestrated the creation of integrated video, motion, and photo content for multi-platform marketing campaigns, ensuring seamless execution and brand alignment.',
+          'Directed all phases of production operations (pre-production, production, post-production), meticulously managing budgets, contracts, and legal requirements to deliver projects on time and within quality standards.',
+          'developed and managed production schedules, creative strategies, and talent relations, optimizing resources to deliver high-quality content within budget parameters.',
+          'Clients include: Nestive, Zentrox, Pollenate, Vireo and more. '
+        ],
+      },
+      {
+        title: 'Content Producer',
+        company: 'Creative Hub Studio',
+        link: '/',
+        period: 'October 2016 - March 2018',
+        location: 'Los Angeles, CA',
+        duties: [
+          'Facilitated clear and efficient communication across cross-functional teams (Marketing, Brand, Creative, IT, QA), ensuring seamless collaboration and project alignment.',
+          'Proactively identified and integrated industry trends, emerging technologies, and cultural insights to enhance creative output and maintain brand relevance.',
+          'Clients include: Lunethra, Forgekind and more.'
+        ],
+      },
+    ],
+    skills: [
+      {
+        title: 'Project Management',
+        skills: [
+          'Budget Management & Forecasting',
+          'Timeline Development & Execution',
+          'Vendor & Contract Negotiation',
+          'On-Site Production Management',
+        ],
+      },
+      {
+        title: 'Strategic & Creative Oversight ',
+        skills: [
+          'Creative Strategy Development',
+          'Talent Relations & Management',
+          'Creative Direction Oversight',
+          'Brand Alignment',
+        ],
+      },
+      {
+        title: 'Communication & Collaboration',
+        skills: [
+          'Cross-Functional Team Leadership',
+          'Client Relationship Management',
+          'Stakeholder Communication',
+        ],
+      },
+    ],
+    stack: [
+      {
+        name: 'React',
+        icon: {
+          src: '',
+        },
+      },
+      {
+        name: 'TypeScript',
+        icon: {
+          src: '',
+        },
+      },
+      {
+        name: 'SCSS',
+        icon: {
+          src: '',
+        },
+      },
+      {
+        name: 'Vite',
+        icon: {
+          src: '',
+        },
+      },
+      {
+        name: 'Docker',
+        icon: {
+          src: '',
+        },
+      },
+    ],
+    recommendations: [
+      {
+        recommenderName: 'Client, Driftwell',
+        recommenderPost: 'Executive Director',
+        text: 'Alexandra brings sunshine to creative teams. Her optimism, problem-solving, and clear communication drive success.',
+      },
+      {
+        recommenderName: 'Creative Director, Creative Agency XYZ',
+        recommenderPost: 'Technical Director',
+        text: 'Alexandra is hungry to tackle new challenges. She’s delightful with clients and can diffuse a tense room with her laugh.',
+      },
+    ]
+  }
+
++page({ basename: 'home' })
+  +section()(class="experience")
+    h2.title.title--type_h3.experience__title Experience
+    ul.experience__list
+      each item in data.experience
+        li.experience__item
+          .experience__info
+            h3.title.title--type_h2.experience__title= item.title
+            .experience__company-info
+              +link({ text: item.company })(class='experience__company' href=item.link)
+              .experience__period= item.period
+              .experience__location= item.location
+
+          ul.experience__duties
+            each dutie in item.duties
+              li.experience__dutie= dutie
+
+
+  +section()(class="skills")
+    h2.title.title--type_h3.skills__title Skills
+    ul.skills__groups
+      each group in data.skills
+        li.skills__group
+          h3.skills__group-title= group.title
+          ul.skills__group-skills
+            each skill in group.skills
+              li.skills__item= skill
+
+  +section()(class="stack")
+    h2.title.title--type_h3.stack__title Stack List
+    ul.stack__list
+      each item in data.stack
+        li.stack__item
+          .stack__icon
+          span.stack__name= item.name
+
+  +section()(class="education")
+    h2.title.title--type_h3.education__title Education
+    .education__content
+      .education__university University of California, Los Angeles (UCLA)
+      .education__details
+        .education__type Bachelor of Fine Arts in Graphic Design
+        .education__spec Minor: Studio Photography
+
+  +section()(class="recommendations")
+    h2.title.title--type_h3.recommendations__title Recommendations
+    ul.recommendations__list
+      each item in data.recommendations
+        li.recommendations__item
+          .recommendations__item-recommender-info
+            .recommendations__item-recommender-name= item.recommenderName
+            .recommendations__item-recommender-post= item.recommenderPost
+
+          .recommendations__item-text= '"' + item.text + '"'

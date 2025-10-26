@@ -1,0 +1,77 @@
+@use 'sass:string';
+@use 'sass:map';
+@use 'sass:list';
+@use 'functions' as f;
+@use 'variables' as v;
+
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
+  $src: null;
+
+  $ext-mods: (
+      eot: "?",
+      svg: "#" + f.str-replace($name, " ", "_")
+  );
+
+  $font-formats: (
+      otf: "opentype",
+      ttf: "truetype"
+  );
+
+  @each $ext in $exts {
+    $ext-modifier: if(
+            map.has-key($ext-mods, $ext),
+            $ext + map.get($ext-mods, $ext),
+            $ext
+    );
+
+    $font-format: if(
+            map.has-key($font-formats, $ext),
+            map.get($font-formats, $ext),
+            $ext
+    );
+
+    $font-url: url(string.quote($path + "." + $ext-modifier));
+    $font-src: $font-url format(string.quote($font-format));
+
+    $src: list.append($src, $font-src, comma);
+  }
+
+  @font-face {
+    font-family: string.quote($name);
+    font-weight: $weight;
+    font-style: $style;
+    font-display: swap;
+    src: $src;
+  }
+}
+
+@mixin font-style($key, $breakpoint) {
+  font-size: map.get(v.$font-size, $key, $breakpoint);
+  font-weight: map.get(v.$font-weight, $key, $breakpoint);
+  line-height: map.get(v.$line-height, $key, $breakpoint);
+  letter-spacing: map.get(v.$letter-spacing, $key, $breakpoint);
+}
+
+@mixin font-styles($key) {
+  @include font-style($key, 1439);
+
+  @media (max-width: 1279px) {
+    @include font-style($key, 1279);
+  }
+
+  @media (max-width: 767px) {
+    @include font-style($key, 767);
+  }
+}
+
+@mixin bullet {
+  &:before {
+    content: '';
+    transform: translateY(0.6em);
+    min-width: 0.3em;
+    max-width: 0.3em;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: currentColor;
+  }
+}

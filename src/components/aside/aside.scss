@@ -1,0 +1,39 @@
+@use 'sass:map';
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding-block: 30px;
+
+  &__text {
+    max-width: 312px;
+  }
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: map.get(v.$color, grey, 200);
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__links-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-block: 12px;
+    border-top: 0.5px solid map.get(v.$color, grey, 200);
+  }
+
+  &__link {
+    font-size: 12px;
+  }
+}

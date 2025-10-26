@@ -1,0 +1,32 @@
+mixin page(options)
+  doctype html
+  html(lang="ru")
+    head
+      title Toporkov Roman | Middle Frontend Developer
+      meta(charset="UTF-8")
+      meta(http-equiv="X-UA-Compatible" content="IE=Edge")
+      meta(name="viewport" content="width=device-width,initial-scale=1")
+
+      if process.env.NODE_ENV === 'production'
+        link(rel='stylesheet' href='css/styles.min.css')
+
+    body.page.js-page-root
+      +header
+
+      .container.page__container
+        .page__aside-wrapper
+          +aside()(class='page__aside')
+
+        .page__content-wrapper
+          main.main.page__main
+            block
+
+            script(
+              type=process.env.NODE_ENV === 'development' ? 'module' : ''
+              src=(process.env.NODE_ENV === 'development'
+                ? `../../pages/${options.basename}/${options.basename}.js`
+                : `./js/${options.basename}.bundle.js`
+              )
+            )
+
+          +footer

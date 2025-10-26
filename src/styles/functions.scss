@@ -1,0 +1,35 @@
+@use 'sass:string';
+@use 'sass:math';
+
+@function str-replace($string, $search, $replace: "") {
+  $index: string.index($string, $search);
+
+  @if not $index {
+    @return $string;
+  }
+
+  $before: string.slice($string, 1, $index - 1);
+  $after: $string, $index + string.length($search);
+  $processed-after: str-replace($after, $search, $replace);
+
+  @return $before + $replace + $processed-after;
+}
+
+@function fluid($min, $max, $min-vw: 360, $max-vw: 1440) {
+  $slope: math.div(($max - $min), ($max-vw - $min-vw));
+  $y-intercept: $min - $slope * $min-vw;
+
+  @if $min > $max {
+    @return clamp(
+        #{$max}px,
+        #{$y-intercept}px + #{$slope * 100}vw,
+        #{$min}px
+    );
+  }
+
+  @return clamp(
+      #{$min}px,
+      #{$y-intercept}px + #{$slope * 100}vw,
+      #{$max}px
+  );
+}

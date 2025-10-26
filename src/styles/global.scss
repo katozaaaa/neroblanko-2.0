@@ -1,0 +1,52 @@
+@use 'sass:map';
+@use 'variables' as v;
+@use 'mixins' as m;
+
+body {
+  display: flex;
+  flex-direction: column;
+  padding-block: 20px;
+  min-height: 100svh;
+  box-sizing: border-box;
+  color: map.get(v.$color, white, 100);
+  background-color: map.get(v.$color, black, 100);
+
+  @include m.font-styles(body);
+}
+
+body * {
+  font-family: map.get(v.$font-family, primary);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+  &--type {
+    &_h1 {
+      @include m.font-styles(h1);
+    }
+
+    &_h2 {
+      @include m.font-styles(h2);
+    }
+
+    &_h3 {
+      @include m.font-styles(h3);
+    }
+  }
+}
+
+picture {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 30px;
+  max-width: 1280px;
+  width: 100%;
+}

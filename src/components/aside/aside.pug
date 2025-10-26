@@ -1,0 +1,42 @@
+mixin aside
+  -
+    const links = [
+      [
+        {
+          text: 'it@katozaaaa.ru',
+          link: 'mailto:it@katozaaaa.ru',
+        },
+        {
+          text: '+7 (927) 939 0309',
+          link: 'tel:+79279390309',
+        },
+      ],
+      [
+        {
+          text: 'GitHub',
+          link: 'https://github.com/katozaaaa/',
+        },
+        {
+          text: 'Linkedin',
+          link: 'https://www.linkedin.com/in/katozaaaa/',
+        },
+        {
+          text: 'Telegram',
+          link: 'https://t.me/katozaaaa/',
+        },
+        {
+          text: 'Instagram',
+          link: 'https://www.instagram.com/lessblesst/',
+        },
+      ],
+    ];
+
+  aside.aside&attributes(attributes)
+    .aside__text A seasoned Senior Producer with 10+ years of experience, I excel in leading complex marketing and design projects from concept to completion.
+    .aside__image
+
+    .aside__links
+      each row in links
+        .aside__links-row
+          each item in row
+            +link({ text: item.text })(href=item.link class='aside__link')

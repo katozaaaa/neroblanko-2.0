@@ -1,17 +1,30 @@
-import { render } from 'pug';
+import { type Options as PugOptions, render } from 'pug';
 import { dirname, relative, resolve, extname, normalize, basename } from 'path';
 import fs from 'fs';
 import { globSync } from 'glob';
 import { normalizePath, } from 'vite';
+import type {
+  Plugin,
+  ResolvedConfig,
+  HmrContext,
+  Alias,
+} from 'vite';
 import pc from 'picocolors';
+
 const { cyan, green } = pc;
 
-export const viteConvertPugInHtml = (options = {}) => {
-  const htmlToPugMap = new Map();
-  let viteConfig;
-  let viteAliases = [];
+type PluginOptions = {
+  pugOptions?: PugOptions;
+  locals?: Record<string, any>;
+  defaultPage?: string,
+};
 
-  const pugAliasResolver = (filename, source) => {
+export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
+  const htmlToPugMap = new Map<string, string>();
+  let viteConfig: ResolvedConfig;
+  let viteAliases: Alias[] = [];
+
+  const pugAliasResolver = (filename: string, source?: string): string => {
     for (const alias of viteAliases) {
       const find = typeof alias.find === 'string' ? new RegExp(`^${alias.find}`) : alias.find;
       if (find.test(filename)) {
@@ -33,10 +46,10 @@ export const viteConvertPugInHtml = (options = {}) => {
     return filename;
   };
 
-  const renderPug = (filename, data = {}) => {
-    const dependencies = new Set();
+  const renderPug = (filename: string, data: Record<string, any> = {}) => {
+    const dependencies = new Set<string>();
     const dependencyTrackingPlugin = {
-      lex(tokens) {
+      lex(tokens: any[]) {
         if (!Array.isArray(tokens))
           return tokens;
         for (const token of tokens) {
@@ -78,7 +91,7 @@ export const viteConvertPugInHtml = (options = {}) => {
       if (fs.existsSync(mainIndexFile)) {
         allPugFiles.push(mainIndexFile);
       }
-      const rollupInput = {};
+      const rollupInput: Record<string, string> = {};
       for (const pugPath of allPugFiles) {
         const normalizedPugPath = normalizePath(pugPath);
         const filenameWithoutExt = basename(normalizedPugPath, extname(normalizedPugPath));
@@ -95,7 +108,7 @@ export const viteConvertPugInHtml = (options = {}) => {
         },
       };
     },
-    configResolved(resolvedConfig) {
+    configResolved(resolvedConfig: ResolvedConfig) {
       viteConfig = resolvedConfig;
       viteAliases = resolvedConfig.resolve?.alias ?? [];
     },
@@ -183,7 +196,7 @@ export const viteConvertPugInHtml = (options = {}) => {
         }
       });
     },
-    handleHotUpdate({ file, server }) {
+    handleHotUpdate({ file, server }: HmrContext): void {
       if (file.endsWith('.pug')) {
         server.config.logger.info(`${cyan('[vite-convert-pug-in-html]')}: Page reload ${green(normalize(relative(viteConfig.root, file)))}`, { timestamp: true });
         server.ws.send({ type: 'full-reload', path: '*' });

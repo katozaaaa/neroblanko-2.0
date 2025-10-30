@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import { viteConvertPugInHtml } from './plugins/viteConvertPugInHtml.js';
+import { viteConvertPugInHtml } from './plugins/viteConvertPugInHtml.ts';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons-ng';
 import { resolve, basename, extname } from 'path';
 import { glob } from 'glob';
@@ -34,11 +34,11 @@ export default defineConfig({
       input: {
         styles: resolve(__dirname, 'src/main.scss'),
         ...Object.fromEntries(
-          glob.sync('src/pages/**/*.js').map((file) => {
+          glob.sync('src/pages/**/*.+(js|ts)').map((file) => {
             const extension = extname(file);
             const filename = basename(file, extension);
             return [
-              filename + '.bundle' + extension,
+              filename + '.bundle.js',
               normalizePath(resolve(__dirname, file)),
             ]
           })
@@ -53,6 +53,7 @@ export default defineConfig({
           return 'assets/[name]-[hash][extname]';
         },
         entryFileNames: (chunkInfo) => {
+          console.log(chunkInfo.name);
           if (chunkInfo.name.endsWith('.js')) {
             return 'js/[name]';
           }

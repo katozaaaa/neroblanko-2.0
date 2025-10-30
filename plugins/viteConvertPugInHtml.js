@@ -167,6 +167,22 @@ export const viteConvertPugInHtml = (options = {}) => {
         }
       });
     },
+    configurePreviewServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        const url = req.url || '/';
+        const requestPath = url.split('?')[0];
+        if (requestPath !== '/')
+          return next();
+        try {
+          res.statusCode = 301;
+          res.setHeader('Location', `${options.defaultPage}`);
+          res.end();
+        }
+        catch (e) {
+          next(e);
+        }
+      });
+    },
     handleHotUpdate({ file, server }) {
       if (file.endsWith('.pug')) {
         server.config.logger.info(`${cyan('[vite-convert-pug-in-html]')}: Page reload ${green(normalize(relative(viteConfig.root, file)))}`, { timestamp: true });

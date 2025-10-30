@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { viteConvertPugInHtml } from './plugins/viteConvertPugInHtml.js';
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons-ng';
 import { resolve, basename, extname } from 'path';
 import { glob } from 'glob';
 import { normalizePath, } from 'vite';
@@ -15,7 +16,16 @@ export default defineConfig({
     },
   },
   plugins: [
-    viteConvertPugInHtml()
+    viteConvertPugInHtml({
+      defaultPage: 'home',
+    }),
+    createSvgIconsPlugin({
+      iconDirs: [
+        resolve(__dirname, 'src/assets/icons'),
+      ],
+      symbolId: 'icon-[name]',
+      inject: 'body-last'
+    })
   ],
   build: {
     outDir: '../dist',
@@ -35,6 +45,7 @@ export default defineConfig({
         )
       },
       output: {
+        chunkFileNames: 'js/[name]-[hash].chunk.js',
         assetFileNames: (assetInfo) => {
           if (assetInfo.names.every((name) => name.endsWith('.css'))) {
             return 'css/[name].min[extname]';
@@ -46,7 +57,7 @@ export default defineConfig({
             return 'js/[name]';
           }
           return '[name].js';
-        }
+        },
       }
     }
   }

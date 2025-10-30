@@ -1,3 +1,4 @@
+import '@/main.js';
 import Header from '@components/header/header';
 
 export default class Page {

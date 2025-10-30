@@ -1,4 +1,3 @@
-import '@/main.js';
 import Page from '@components/page/page';
 
 class HomePage extends Page {

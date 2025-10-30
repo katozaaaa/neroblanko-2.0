@@ -11,7 +11,8 @@
   "devDependencies": {
     "pug": "^3.0.3",
     "sass-embedded": "^1.93.2",
-    "vite": "^7.1.7"
+    "vite": "^7.1.7",
+    "vite-plugin-svg-icons-ng": "^1.5.1"
   },
   "dependencies": {
     "glob": "^11.0.3",

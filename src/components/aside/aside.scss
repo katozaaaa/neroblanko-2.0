@@ -35,5 +35,9 @@
 
   &__link {
     font-size: 12px;
+
+    svg {
+      transform: translateY(0.1em);
+    }
   }
 }

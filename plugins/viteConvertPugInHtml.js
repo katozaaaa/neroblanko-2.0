@@ -121,6 +121,19 @@ export const viteConvertPugInHtml = (options = {}) => {
       }
       return null;
     },
+    transformIndexHtml: {
+      order: 'post',
+      handler(html, ctx) {
+        if (ctx.path.endsWith('.html')) {
+          return html
+            .replace(
+              /data-script="(.+).js"/g,
+              `src="$1.js"`
+            )
+        }
+        return html;
+      }
+    },
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
         const url = req.url || '/';
@@ -130,9 +143,9 @@ export const viteConvertPugInHtml = (options = {}) => {
         let pugPath;
         let cleanPath = requestPath.slice(1);
         if (cleanPath === '' || requestPath.endsWith('/')) {
-          cleanPath = cleanPath ? `${cleanPath}home.html` : 'home.html';
+          cleanPath = cleanPath ? `${cleanPath}${options.defaultPage}.html` : `${options.defaultPage}.html`;
         }
-        let potentialHtmlPath = resolve(viteConfig.root, cleanPath.endsWith('.html') ? cleanPath : `${cleanPath}/home.html`);
+        let potentialHtmlPath = resolve(viteConfig.root, cleanPath.endsWith('.html') ? cleanPath : `${cleanPath}/${options.defaultPage}.html`);
         pugPath = htmlToPugMap.get(normalizePath(potentialHtmlPath));
         if (!pugPath && !cleanPath.endsWith('.html')) {
           potentialHtmlPath = resolve(viteConfig.root, `${cleanPath}.html`);

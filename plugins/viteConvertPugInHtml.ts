@@ -2,12 +2,12 @@ import { type Options as PugOptions, render } from 'pug';
 import { dirname, relative, resolve, extname, normalize, basename } from 'path';
 import fs from 'fs';
 import { globSync } from 'glob';
-import { normalizePath, } from 'vite';
+import { normalizePath } from 'vite';
 import type {
   Plugin,
   ResolvedConfig,
   HmrContext,
-  Alias,
+  Alias
 } from 'vite';
 import pc from 'picocolors';
 
@@ -62,7 +62,7 @@ export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
           }
         }
         return tokens;
-      },
+      }
     };
     const source = fs.readFileSync(filename, 'utf-8');
     const renderData = { ...options.locals, ...data };
@@ -72,7 +72,7 @@ export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
       pretty: true,
       ...options.pugOptions,
       ...renderData,
-      plugins: [{ resolve: pugAliasResolver }, dependencyTrackingPlugin],
+      plugins: [ { resolve: pugAliasResolver }, dependencyTrackingPlugin ]
     });
     return { html, dependencies };
   };
@@ -83,11 +83,11 @@ export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
     config(userConfig) {
       const root = normalizePath(resolve(process.cwd(), userConfig.root || ''));
       const pageFiles = globSync(`${root}/pages/**/*.pug`, {
-        ignore: [`${root}/**/_*.pug`],
-        absolute: true,
+        ignore: [ `${root}/**/_*.pug` ],
+        absolute: true
       });
       const mainIndexFile = resolve(root, 'index.pug');
-      const allPugFiles = [...pageFiles];
+      const allPugFiles = [ ...pageFiles ];
       if (fs.existsSync(mainIndexFile)) {
         allPugFiles.push(mainIndexFile);
       }
@@ -103,9 +103,9 @@ export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
       return {
         build: {
           rollupOptions: {
-            input: rollupInput,
-          },
-        },
+            input: rollupInput
+          }
+        }
       };
     },
     configResolved(resolvedConfig: ResolvedConfig) {
@@ -141,8 +141,8 @@ export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
           return html
             .replace(
               /data-script="(.+).js"/g,
-              `src="$1.js"`
-            )
+              'src="$1.js"'
+            );
         }
         return html;
       }
@@ -201,7 +201,7 @@ export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
         server.config.logger.info(`${cyan('[vite-convert-pug-in-html]')}: Page reload ${green(normalize(relative(viteConfig.root, file)))}`, { timestamp: true });
         server.ws.send({ type: 'full-reload', path: '*' });
       }
-    },
+    }
   };
 };
 //# sourceMappingURL=index.js.map

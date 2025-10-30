@@ -3,7 +3,7 @@ import { viteConvertPugInHtml } from './plugins/viteConvertPugInHtml.ts';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons-ng';
 import { resolve, basename, extname } from 'path';
 import { glob } from 'glob';
-import { normalizePath, } from 'vite';
+import { normalizePath } from 'vite';
 
 export default defineConfig({
   root: 'src',
@@ -12,16 +12,16 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
       '@pages': resolve(__dirname, 'src/pages'),
       '@components': resolve(__dirname, 'src/components'),
-      '@scripts': resolve(__dirname, 'src/scripts'),
-    },
+      '@scripts': resolve(__dirname, 'src/scripts')
+    }
   },
   plugins: [
     viteConvertPugInHtml({
-      defaultPage: 'home',
+      defaultPage: 'home'
     }),
     createSvgIconsPlugin({
       iconDirs: [
-        resolve(__dirname, 'src/assets/icons'),
+        resolve(__dirname, 'src/assets/icons')
       ],
       symbolId: 'icon-[name]',
       inject: 'body-last'
@@ -39,8 +39,8 @@ export default defineConfig({
             const filename = basename(file, extension);
             return [
               filename + '.bundle.js',
-              normalizePath(resolve(__dirname, file)),
-            ]
+              normalizePath(resolve(__dirname, file))
+            ];
           })
         )
       },
@@ -58,7 +58,7 @@ export default defineConfig({
             return 'js/[name]';
           }
           return '[name].js';
-        },
+        }
       }
     }
   }

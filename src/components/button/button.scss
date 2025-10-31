@@ -3,6 +3,7 @@
 @use '../../styles/mixins' as m;
 
 .button {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,23 +12,14 @@
   text-decoration: none;
   color: inherit;
   background-color: transparent;
-  transition: all 300ms ease-out;
   cursor: pointer;
 
   @include m.font-styles(h1);
-
-  @media (hover: hover) {
-    &:hover {
-      color: map.get(v.$color, grey, 100);
-    }
-  }
-
-  &:active {
-    color: map.get(v.$color, grey, 100);
-  }
+  @include m.underline-animation;
 
   &[disabled='disabled'],
   &:disabled {
-    color: map.get(v.$color, grey, 200);
+    cursor: not-allowed;
+    color: map.get(v.$color, grey, 100);
   }
 }

@@ -1,12 +1,25 @@
+@use 'sass:map';
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
 .link {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.3em;
+  max-width: max-content;
   text-decoration: none;
   color: inherit;
-  transition: all 300ms ease-out;
   cursor: pointer;
+
+  &[disabled='disabled'],
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  @include m.underline-animation;
 
   svg {
     width: 0.8em;

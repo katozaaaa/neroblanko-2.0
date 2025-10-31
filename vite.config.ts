@@ -51,7 +51,6 @@ export default defineConfig({
           return 'assets/[name]-[hash][extname]';
         },
         entryFileNames: (chunkInfo) => {
-          console.log(chunkInfo.name);
           if (chunkInfo.name.endsWith('.js')) {
             return 'js/[name]';
           }

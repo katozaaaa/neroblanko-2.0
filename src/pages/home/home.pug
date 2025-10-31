@@ -72,31 +72,31 @@ include src/components/_index.pug
       {
         name: 'React',
         icon: {
-          src: '',
+          name: 'icon-react-logo',
         },
       },
       {
         name: 'TypeScript',
         icon: {
-          src: '',
+          name: 'icon-ts-logo',
         },
       },
       {
         name: 'SCSS',
         icon: {
-          src: '',
+          name: 'icon-sass-logo',
         },
       },
       {
         name: 'Vite',
         icon: {
-          src: '',
+          name: 'icon-vite-logo',
         },
       },
       {
         name: 'Docker',
         icon: {
-          src: '',
+          name: 'icon-docker-logo',
         },
       },
     ],
@@ -147,7 +147,8 @@ include src/components/_index.pug
     ul.stack__list
       each item in data.stack
         li.stack__item
-          .stack__icon
+          svg
+            use(href=`#${item.icon.name}`)
           span.stack__name= item.name
 
   +section()(class="education")

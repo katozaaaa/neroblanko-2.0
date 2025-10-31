@@ -26,7 +26,7 @@
     color: map.get(v.$color, grey, 100);
   }
 
-  &[disabled="disabled"],
+  &[disabled='disabled'],
   &:disabled {
     color: map.get(v.$color, grey, 200);
   }

@@ -20,9 +20,7 @@ export default defineConfig({
       defaultPage: 'home'
     }),
     createSvgIconsPlugin({
-      iconDirs: [
-        resolve(__dirname, 'src/assets/icons')
-      ],
+      iconDirs: [resolve(__dirname, 'src/assets/icons')],
       symbolId: 'icon-[name]',
       inject: 'body-last'
     })

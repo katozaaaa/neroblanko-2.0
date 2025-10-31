@@ -4,33 +4,39 @@
 @use 'functions' as f;
 @use 'variables' as v;
 
-@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
+@mixin font-face(
+  $name,
+  $path,
+  $weight: null,
+  $style: null,
+  $exts: eot woff2 woff ttf svg
+) {
   $src: null;
 
   $ext-mods: (
-      eot: "?",
-      svg: "#" + f.str-replace($name, " ", "_")
+    eot: '?',
+    svg: '#' + f.str-replace($name, ' ', '_')
   );
 
   $font-formats: (
-      otf: "opentype",
-      ttf: "truetype"
+    otf: 'opentype',
+    ttf: 'truetype'
   );
 
   @each $ext in $exts {
     $ext-modifier: if(
-            map.has-key($ext-mods, $ext),
-            $ext + map.get($ext-mods, $ext),
-            $ext
+      map.has-key($ext-mods, $ext),
+      $ext + map.get($ext-mods, $ext),
+      $ext
     );
 
     $font-format: if(
-            map.has-key($font-formats, $ext),
-            map.get($font-formats, $ext),
-            $ext
+      map.has-key($font-formats, $ext),
+      map.get($font-formats, $ext),
+      $ext
     );
 
-    $font-url: url(string.quote($path + "." + $ext-modifier));
+    $font-url: url(string.quote($path + '.' + $ext-modifier));
     $font-src: $font-url format(string.quote($font-format));
 
     $src: list.append($src, $font-src, comma);

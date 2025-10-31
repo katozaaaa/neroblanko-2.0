@@ -1,34 +1,31 @@
-import js from '@eslint/js';
-import globals from 'globals';
+import { defineConfig } from 'eslint/config';
+import jseslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import eslintConfigPrettier from 'eslint-config-prettier/flat';
+import globals from 'globals';
 
-export default tseslint.config(
+export default defineConfig([
   {
-    ignores: [
-      'dist',
-      'node_modules'
-    ]
+    ignores: ['dist/', 'node_modules/']
   },
   {
-    extends: [
-      js.configs.recommended,
-      ...tseslint.configs.recommended
-    ],
-    files: [ '**/*.{js,mjs,cjs,ts,mts,cts}' ],
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser
     },
-    plugins: { js },
+    extends: [
+      jseslint.configs.recommended,
+      tseslint.configs.recommended,
+      eslintConfigPrettier
+    ],
     rules: {
-      'indent': [ 'warn', 2, { 'SwitchCase': 1 } ],
-      'quotes': [ 'warn', 'single', { 'avoidEscape': true } ],
-      'comma-dangle': [ 'warn', 'never' ],
-      'semi': [ 'warn', 'always' ],
-      'object-curly-spacing': [ 'warn', 'always' ],
-      'array-bracket-spacing': [ 'warn', 'always' ],
+      indent: ['warn', 2, { SwitchCase: 1 }],
+      quotes: ['warn', 'single', { avoidEscape: true }],
+      'comma-dangle': ['warn', 'never'],
+      semi: ['warn', 'always'],
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-empty-object-type': 'off'
     }
   }
-);
+]);

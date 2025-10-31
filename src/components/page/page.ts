@@ -2,7 +2,7 @@ import '@/main';
 import Header from '@components/header/header';
 
 interface Options {
-  root?: Element
+  root?: Element;
 }
 
 export default class Page {
@@ -10,9 +10,7 @@ export default class Page {
   _header: Header | null;
 
   constructor(options: Options = {}) {
-    const {
-      root
-    } = options;
+    const { root } = options;
     if (!root) {
       throw new Error('No root element found');
     }

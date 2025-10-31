@@ -3,12 +3,7 @@ import { dirname, relative, resolve, extname, normalize, basename } from 'path';
 import fs from 'fs';
 import { globSync } from 'glob';
 import { normalizePath } from 'vite';
-import type {
-  Plugin,
-  ResolvedConfig,
-  HmrContext,
-  Alias
-} from 'vite';
+import type { Plugin, ResolvedConfig, HmrContext, Alias } from 'vite';
 import pc from 'picocolors';
 
 const { cyan, green } = pc;
@@ -16,30 +11,33 @@ const { cyan, green } = pc;
 type PluginOptions = {
   pugOptions?: PugOptions;
   locals?: Record<string, any>;
-  defaultPage?: string,
+  defaultPage?: string;
 };
 
-export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
+export const viteConvertPugInHtml = (options: PluginOptions = {}): Plugin => {
   const htmlToPugMap = new Map<string, string>();
   let viteConfig: ResolvedConfig;
   let viteAliases: Alias[] = [];
 
   const pugAliasResolver = (filename: string, source?: string): string => {
     for (const alias of viteAliases) {
-      const find = typeof alias.find === 'string' ? new RegExp(`^${alias.find}`) : alias.find;
+      const find =
+        typeof alias.find === 'string'
+          ? new RegExp(`^${alias.find}`)
+          : alias.find;
       if (find.test(filename)) {
         const aliasedPath = filename.replace(find, alias.replacement);
-        if (fs.existsSync(aliasedPath))
-          return aliasedPath;
-        if (fs.existsSync(aliasedPath + '.pug'))
-          return aliasedPath + '.pug';
+        if (fs.existsSync(aliasedPath)) return aliasedPath;
+        if (fs.existsSync(aliasedPath + '.pug')) return aliasedPath + '.pug';
       }
     }
     if (source) {
       const resolvedPath = resolve(dirname(source), filename);
-      if (fs.existsSync(resolvedPath))
-        return resolvedPath;
-      if (extname(resolvedPath) !== '.pug' && fs.existsSync(resolvedPath + '.pug')) {
+      if (fs.existsSync(resolvedPath)) return resolvedPath;
+      if (
+        extname(resolvedPath) !== '.pug' &&
+        fs.existsSync(resolvedPath + '.pug')
+      ) {
         return resolvedPath + '.pug';
       }
     }
@@ -50,11 +48,12 @@ export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
     const dependencies = new Set<string>();
     const dependencyTrackingPlugin = {
       lex(tokens: any[]) {
-        if (!Array.isArray(tokens))
-          return tokens;
+        if (!Array.isArray(tokens)) return tokens;
         for (const token of tokens) {
-          if ((token.type === 'include' || token.type === 'extends') &&
-              token.file?.path) {
+          if (
+            (token.type === 'include' || token.type === 'extends') &&
+            token.file?.path
+          ) {
             const depPath = pugAliasResolver(token.file.path, filename);
             if (fs.existsSync(depPath)) {
               dependencies.add(normalizePath(depPath));
@@ -72,7 +71,7 @@ export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
       pretty: true,
       ...options.pugOptions,
       ...renderData,
-      plugins: [ { resolve: pugAliasResolver }, dependencyTrackingPlugin ]
+      plugins: [{ resolve: pugAliasResolver }, dependencyTrackingPlugin]
     });
     return { html, dependencies };
   };
@@ -83,20 +82,25 @@ export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
     config(userConfig) {
       const root = normalizePath(resolve(process.cwd(), userConfig.root || ''));
       const pageFiles = globSync(`${root}/pages/**/*.pug`, {
-        ignore: [ `${root}/**/_*.pug` ],
+        ignore: [`${root}/**/_*.pug`],
         absolute: true
       });
       const mainIndexFile = resolve(root, 'index.pug');
-      const allPugFiles = [ ...pageFiles ];
+      const allPugFiles = [...pageFiles];
       if (fs.existsSync(mainIndexFile)) {
         allPugFiles.push(mainIndexFile);
       }
       const rollupInput: Record<string, string> = {};
       for (const pugPath of allPugFiles) {
         const normalizedPugPath = normalizePath(pugPath);
-        const filenameWithoutExt = basename(normalizedPugPath, extname(normalizedPugPath));
+        const filenameWithoutExt = basename(
+          normalizedPugPath,
+          extname(normalizedPugPath)
+        );
         const entryKey = normalizePath(filenameWithoutExt);
-        const virtualHtmlPath = normalizePath(resolve(root, `${entryKey}.html`));
+        const virtualHtmlPath = normalizePath(
+          resolve(root, `${entryKey}.html`)
+        );
         rollupInput[entryKey] = virtualHtmlPath;
         htmlToPugMap.set(virtualHtmlPath, normalizedPugPath);
       }
@@ -127,8 +131,7 @@ export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
             this.addWatchFile(dep);
           }
           return html;
-        }
-        catch (e) {
+        } catch (e) {
           this.error(e);
         }
       }
@@ -138,11 +141,7 @@ export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
       order: 'post',
       handler(html, ctx) {
         if (ctx.path.endsWith('.html')) {
-          return html
-            .replace(
-              /data-script="(.+).js"/g,
-              'src="$1.js"'
-            );
+          return html.replace(/data-script="(.+).js"/g, 'src="$1.js"');
         }
         return html;
       }
@@ -156,26 +155,34 @@ export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
         let pugPath;
         let cleanPath = requestPath.slice(1);
         if (cleanPath === '' || requestPath.endsWith('/')) {
-          cleanPath = cleanPath ? `${cleanPath}${options.defaultPage}.html` : `${options.defaultPage}.html`;
+          cleanPath = cleanPath
+            ? `${cleanPath}${options.defaultPage}.html`
+            : `${options.defaultPage}.html`;
         }
-        let potentialHtmlPath = resolve(viteConfig.root, cleanPath.endsWith('.html') ? cleanPath : `${cleanPath}/${options.defaultPage}.html`);
+        let potentialHtmlPath = resolve(
+          viteConfig.root,
+          cleanPath.endsWith('.html')
+            ? cleanPath
+            : `${cleanPath}/${options.defaultPage}.html`
+        );
         pugPath = htmlToPugMap.get(normalizePath(potentialHtmlPath));
         if (!pugPath && !cleanPath.endsWith('.html')) {
           potentialHtmlPath = resolve(viteConfig.root, `${cleanPath}.html`);
           pugPath = htmlToPugMap.get(normalizePath(potentialHtmlPath));
         }
-        if (!pugPath)
-          return next();
+        if (!pugPath) return next();
         try {
           const { html, dependencies } = renderPug(pugPath);
-          for (const dep of dependencies)
-            server.watcher.add(dep);
-          const transformedHtml = await server.transformIndexHtml(url, html, req.originalUrl);
+          for (const dep of dependencies) server.watcher.add(dep);
+          const transformedHtml = await server.transformIndexHtml(
+            url,
+            html,
+            req.originalUrl
+          );
           res.statusCode = 200;
           res.setHeader('Content-Type', 'text/html');
           res.end(transformedHtml);
-        }
-        catch (e) {
+        } catch (e) {
           next(e);
         }
       });
@@ -184,21 +191,22 @@ export const viteConvertPugInHtml = (options: PluginOptions = { }): Plugin => {
       server.middlewares.use(async (req, res, next) => {
         const url = req.url || '/';
         const requestPath = url.split('?')[0];
-        if (requestPath !== '/')
-          return next();
+        if (requestPath !== '/') return next();
         try {
           res.statusCode = 301;
           res.setHeader('Location', `${options.defaultPage}`);
           res.end();
-        }
-        catch (e) {
+        } catch (e) {
           next(e);
         }
       });
     },
     handleHotUpdate({ file, server }: HmrContext): void {
       if (file.endsWith('.pug')) {
-        server.config.logger.info(`${cyan('[vite-convert-pug-in-html]')}: Page reload ${green(normalize(relative(viteConfig.root, file)))}`, { timestamp: true });
+        server.config.logger.info(
+          `${cyan('[vite-convert-pug-in-html]')}: Page reload ${green(normalize(relative(viteConfig.root, file)))}`,
+          { timestamp: true }
+        );
         server.ws.send({ type: 'full-reload', path: '*' });
       }
     }

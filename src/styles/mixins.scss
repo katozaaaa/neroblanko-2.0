@@ -99,7 +99,8 @@
     }
   }
 
-  &:before, &:after {
+  &:before,
+  &:after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -110,7 +111,9 @@
   &:before {
     left: 0;
     visibility: hidden;
-    transition: width 300ms ease, background-color 300ms ease;
+    transition:
+      width 300ms ease,
+      background-color 300ms ease;
   }
 
   &:after {

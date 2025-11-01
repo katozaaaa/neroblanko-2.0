@@ -1,28 +1,28 @@
-import '@/main';
-import Header from '@components/header/header';
+import '@/main'
+import Header from '@components/header/header'
 
 interface Options {
-  root?: Element;
+  root?: Element
 }
 
 export default class Page {
-  _root: Element;
-  _header: Header | null;
+  _root: Element
+  _header: Header | null
 
   constructor(options: Options = {}) {
-    const { root } = options;
+    const { root } = options
     if (!root) {
-      throw new Error('No root element found');
+      throw new Error('No root element found')
     }
-    this._root = root;
-    this._header = null;
-    this._initHeader();
+    this._root = root
+    this._header = null
+    this._initHeader()
   }
 
   _initHeader() {
-    const header = this._root.querySelector('.js-header');
+    const header = this._root.querySelector('.js-header')
     if (header) {
-      this._header = new Header({ root: header });
+      this._header = new Header({ root: header })
     }
   }
 }

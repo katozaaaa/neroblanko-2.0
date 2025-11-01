@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite';
-import { viteConvertPugInHtml } from './plugins/viteConvertPugInHtml.ts';
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons-ng';
-import { resolve, basename, extname } from 'path';
-import { glob } from 'glob';
-import { normalizePath } from 'vite';
+import { defineConfig } from 'vite'
+import { viteConvertPugInHtml } from './plugins/viteConvertPugInHtml.ts'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons-ng'
+import { resolve, basename, extname } from 'path'
+import { glob } from 'glob'
+import { normalizePath } from 'vite'
 
 export default defineConfig({
   root: 'src',
@@ -33,12 +33,12 @@ export default defineConfig({
         styles: resolve(__dirname, 'src/main.scss'),
         ...Object.fromEntries(
           glob.sync('src/pages/**/*.+(js|ts)').map((file) => {
-            const extension = extname(file);
-            const filename = basename(file, extension);
+            const extension = extname(file)
+            const filename = basename(file, extension)
             return [
               filename + '.bundle.js',
               normalizePath(resolve(__dirname, file))
-            ];
+            ]
           })
         )
       },
@@ -46,17 +46,17 @@ export default defineConfig({
         chunkFileNames: 'js/[name]-[hash].chunk.js',
         assetFileNames: (assetInfo) => {
           if (assetInfo.names.every((name) => name.endsWith('.css'))) {
-            return 'css/[name].min[extname]';
+            return 'css/[name].min[extname]'
           }
-          return 'assets/[name]-[hash][extname]';
+          return 'assets/[name]-[hash][extname]'
         },
         entryFileNames: (chunkInfo) => {
           if (chunkInfo.name.endsWith('.js')) {
-            return 'js/[name]';
+            return 'js/[name]'
           }
-          return '[name].js';
+          return '[name].js'
         }
       }
     }
   }
-});
+})

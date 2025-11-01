@@ -1,5 +1,5 @@
-import 'virtual:svg-icons/register';
+import 'virtual:svg-icons/register'
 
 if (process.env.NODE_ENV === 'development') {
-  import('@/main.scss');
+  import('@/main.scss')
 }

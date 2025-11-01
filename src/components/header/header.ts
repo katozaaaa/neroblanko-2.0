@@ -1,16 +1,16 @@
 interface Options {
-  root?: Element;
+  root?: Element
 }
 
 export default class Header {
-  _root: Element;
+  _root: Element
 
   constructor(options: Options = {}) {
-    const { root } = options;
+    const { root } = options
     if (!root) {
-      throw new Error('No root element found');
+      throw new Error('No root element found')
     }
-    this._root = root;
-    console.log('Initializing header');
+    this._root = root
+    console.log('Initializing header')
   }
 }

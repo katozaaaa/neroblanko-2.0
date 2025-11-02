@@ -39,4 +39,4 @@ mixin aside
       each row in links
         .aside__links-row
           each item in row
-            +link({ text: item.text })(href=item.link class='aside__link')
+            +link({ text: item.text }).aside__link(href=item.link)

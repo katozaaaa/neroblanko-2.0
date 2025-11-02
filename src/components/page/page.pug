@@ -1,29 +1,35 @@
 mixin page(options)
   doctype html
-  html(lang="ru")
+  html(lang='ru')
     head
       title Toporkov Roman | Middle Frontend Developer
-      meta(charset="UTF-8")
-      meta(http-equiv="X-UA-Compatible" content="IE=Edge")
-      meta(name="viewport" content="width=device-width,initial-scale=1")
+      meta(charset='UTF-8')
+      meta(http-equiv='X-UA-Compatible', content='IE=Edge')
+      meta(name='viewport', content='width=device-width,initial-scale=1')
 
       if process.env.NODE_ENV === 'production'
-        link(rel='stylesheet' href='css/styles.min.css')
+        link(rel='stylesheet', href='css/styles.min.css')
 
     body.page.js-page-root
       +header
 
       .container.page__container
         .page__aside-wrapper
-          +aside()(class='page__aside')
+          +aside.page__aside
 
         .page__content-wrapper
           main.main.page__main
             block
 
             if process.env.NODE_ENV === 'production'
-              script(type='module' data-script=`./js/${options.basename}.bundle.js`)
+              script(
+                type='module',
+                data-script=`./js/${options.basename}.bundle.js`
+              )
             else
-              script(type='module' src=`../../pages/${options.basename}/${options.basename}.js`)
+              script(
+                type='module',
+                src=`../../pages/${options.basename}/${options.basename}.js`
+              )
 
           +footer

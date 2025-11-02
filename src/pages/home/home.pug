@@ -115,7 +115,7 @@ include src/components/_index.pug
   }
 
 +page({ basename: 'home' })
-  +section()(class="experience")
+  +section.experience
     h2.title.title--type_h3.experience__title Experience
     ul.experience__list
       each item in data.experience
@@ -123,7 +123,9 @@ include src/components/_index.pug
           .experience__info
             h3.title.title--type_h2.experience__title= item.title
             .experience__company-info
-              +link({ text: item.company })(class='experience__company' href=item.link)
+              +link({ text: item.company }).experience__company(
+                href=item.link
+              )
               .experience__period= item.period
               .experience__location= item.location
 
@@ -131,8 +133,7 @@ include src/components/_index.pug
             each dutie in item.duties
               li.experience__dutie= dutie
 
-
-  +section()(class="skills")
+  +section.skills
     h2.title.title--type_h3.skills__title Skills
     ul.skills__groups
       each group in data.skills
@@ -142,7 +143,7 @@ include src/components/_index.pug
             each skill in group.skills
               li.skills__item= skill
 
-  +section()(class="stack")
+  +section.stack
     h2.title.title--type_h3.stack__title Stack List
     ul.stack__list
       each item in data.stack
@@ -151,7 +152,7 @@ include src/components/_index.pug
             use(href=`#${item.icon.name}`)
           span.stack__name= item.name
 
-  +section()(class="education")
+  +section.education
     h2.title.title--type_h3.education__title Education
     .education__content
       .education__university University of California, Los Angeles (UCLA)
@@ -159,7 +160,7 @@ include src/components/_index.pug
         .education__type Bachelor of Fine Arts in Graphic Design
         .education__spec Minor: Studio Photography
 
-  +section()(class="recommendations")
+  +section.recommendations
     h2.title.title--type_h3.recommendations__title Recommendations
     ul.recommendations__list
       each item in data.recommendations

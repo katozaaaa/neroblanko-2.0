@@ -12,12 +12,24 @@
     "pretty": "npx prettier . --check",
     "pretty:fix": "npx prettier . --write"
   },
+  "lint-staged": {
+    "*.{js,mjs,cjs,ts,mts,cts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,html,pug,css,scss,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
   "devDependencies": {
     "@eslint/js": "^9.38.0",
+    "@prettier/plugin-pug": "^3.4.2",
     "@types/node": "^24.9.2",
     "eslint": "^9.38.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^16.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
     "prettier": "^3.6.2",
     "pug": "^3.0.3",
     "sass-embedded": "^1.93.2",

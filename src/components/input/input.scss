@@ -1,0 +1,47 @@
+@use 'sass:map';
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &:after {
+    content: attr(data-message);
+    position: absolute;
+    bottom: 0;
+    right: 1em;
+    transform: translateY(50%);
+    align-self: flex-end;
+    display: block;
+    padding-inline: 0.5em;
+    color: map.get(v.$color, grey, 100);
+    background-color: map.get(v.$color, black, 100);
+    font-size: 12px;
+  }
+
+  &__field {
+    flex-grow: 1;
+    padding-block: 12px;
+    width: 100%;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid map.get(v.$color, grey, 200);
+    color: map.get(v.$color, grey, 100);
+    background-color: transparent;
+    resize: none;
+
+    &::placeholder {
+      color: map.get(v.$color, grey, 200);
+      transition: color 300ms ease-out;
+    }
+
+    &:focus {
+      &::placeholder {
+        color: map.get(v.$color, grey, 100);
+      }
+    }
+  }
+}

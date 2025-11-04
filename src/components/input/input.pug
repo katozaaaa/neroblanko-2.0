@@ -1,0 +1,16 @@
+mixin input(options)
+  if options.type !== 'textarea'
+    .input(class=`input--type_${type} js-input-${options.name}`)&attributes(attributes)
+      input.input__field(
+        type=options.type,
+        name=options.name,
+        placeholder=options.placeholder,
+        required=Boolean(options.required)
+      )
+  else
+    .input(class=`input--type_${type} js-input-${options.name}`)&attributes(attributes)
+      textarea.input__field(
+        name=options.name,
+        placeholder=options.placeholder,
+        required=Boolean(options.required)
+      )

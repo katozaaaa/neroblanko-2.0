@@ -1,0 +1,8 @@
+mixin modal
+  .modal&attributes(attributes)
+    .modal__container
+      .modal__header.js-modal-header
+        +button.modal__close-button.js-close-modal
+          span Close
+      .modal__body.js-modal-body
+        block

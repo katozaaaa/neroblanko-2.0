@@ -3,6 +3,7 @@
 @use '../../styles/mixins' as m;
 
 .aside {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 50px;

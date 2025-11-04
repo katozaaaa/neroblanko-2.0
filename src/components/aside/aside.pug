@@ -31,10 +31,9 @@ mixin aside
       ],
     ];
 
-  aside.aside&attributes(attributes)
+  aside.aside.js-aside&attributes(attributes)
     .aside__text A seasoned Senior Producer with 10+ years of experience, I excel in leading complex marketing and design projects from concept to completion.
-    .aside__image
-
+    .aside__image.js-aside-image
     .aside__links
       each row in links
         .aside__links-row

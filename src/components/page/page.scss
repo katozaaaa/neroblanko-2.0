@@ -21,4 +21,20 @@
   &__content-wrapper {
     flex: 0 1 812px;
   }
+
+  &__contact-modal-form {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  &__contact-modal-subject {
+    min-height: 200px;
+  }
+
+  &__contact-modal-submit {
+    align-self: flex-start;
+    margin-top: auto;
+  }
 }

@@ -1,16 +1,19 @@
-interface Options {
-  root?: Element
+interface HeaderOptions {
+  root: HTMLElement
 }
 
 export default class Header {
-  _root: Element
+  _root: HTMLElement
 
-  constructor(options: Options = {}) {
+  constructor(options: HeaderOptions) {
     const { root } = options
-    if (!root) {
+    if (!(root instanceof HTMLElement)) {
       throw new Error('No root element found')
     }
     this._root = root
-    console.log('Initializing header')
+  }
+
+  get height() {
+    return this._root.clientHeight
   }
 }

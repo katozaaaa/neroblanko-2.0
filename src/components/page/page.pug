@@ -29,7 +29,19 @@ mixin page(options)
             else
               script(
                 type='module',
-                src=`../../pages/${options.basename}/${options.basename}.js`
+                src=`../../pages/${options.basename}/${options.basename}.ts`
               )
 
           +footer
+
+      +modal.js-contact-modal.page__contact-modal
+        +form.js-contact-form.page__contact-modal-form
+          .page__contact-modal-inputs
+            +input({ name: 'name', type: 'text', placeholder: 'Name' }).page__contact-modal-name
+            +input({ name: 'email', type: 'email', placeholder: 'E-mail' }).page__contact-modal-email
+            +input({ name: 'subject', type: 'textarea', placeholder: 'Subject' }).page__contact-modal-subject
+          +button.page__contact-modal-submit.js-submit-button(
+            type='submit',
+            disabled
+          )
+            span Send

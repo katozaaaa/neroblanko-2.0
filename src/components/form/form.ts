@@ -13,6 +13,7 @@ interface FormOptions {
   inputConfigs: {
     [name: string]: InputConfig
   }
+  onSubmit: (e: SubmitEvent) => void
 }
 
 export default class Form {
@@ -20,13 +21,14 @@ export default class Form {
   _inputConfigs: {
     [name: string]: InputConfig
   }
+  _onSubmit: (e: SubmitEvent) => void
   _inputs: {
     [name: string]: Input
   }
   _submitButton: HTMLButtonElement
 
   constructor(options: FormOptions) {
-    const { root, inputConfigs } = options
+    const { root, inputConfigs, onSubmit } = options
     if (!(root instanceof HTMLElement)) {
       throw new Error('No root element found')
     }
@@ -37,29 +39,10 @@ export default class Form {
     }
     this._submitButton = submitButton
     this._inputConfigs = inputConfigs
+    this._onSubmit = onSubmit
     this._inputs = {}
     this._setUpInputControllers()
-  }
-
-  _setUpInputControllers() {
-    Object.keys(this._inputConfigs).forEach((name) => {
-      const inputElement = this._root.querySelector(`.js-input-${name}`)
-      if (inputElement instanceof HTMLElement) {
-        this._inputs[name] = new Input({
-          root: inputElement,
-          ...this._inputConfigs[name],
-          onInput: this.validate.bind(this)
-        })
-      }
-    })
-  }
-
-  validate() {
-    if (this.isValid()) {
-      this.enableSubmitButton()
-    } else {
-      this.disableSubmitButton()
-    }
+    this._setUpSubmitListener()
   }
 
   isValid() {
@@ -68,11 +51,30 @@ export default class Form {
     )
   }
 
-  enableSubmitButton() {
-    this._submitButton.removeAttribute('disabled')
+  _setUpInputControllers() {
+    Object.keys(this._inputConfigs).forEach((name) => {
+      const inputElement = this._root.querySelector(`.js-input-${name}`)
+      if (inputElement instanceof HTMLElement) {
+        this._inputs[name] = new Input({
+          root: inputElement,
+          ...this._inputConfigs[name]
+        })
+      }
+    })
   }
 
-  disableSubmitButton() {
-    this._submitButton.setAttribute('disabled', '')
+  _setUpSubmitListener() {
+    this._root.addEventListener('submit', (e) => {
+      e.preventDefault()
+      if (this.isValid()) {
+        this._onSubmit(e)
+      } else {
+        Object.values(this._inputs).forEach((input) => {
+          if (input.isEmpty()) {
+            input.showMessageAboutEmptyInput()
+          }
+        })
+      }
+    })
   }
 }

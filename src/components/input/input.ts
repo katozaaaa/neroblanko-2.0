@@ -17,6 +17,7 @@ export default class Input {
     onEmpty: string
   }
   _onInput?: () => void
+  _lastIncorrectValue: string | null
 
   constructor(options: InputOptions) {
     const { root, validatingCallback, messages, onInput } = options
@@ -34,42 +35,59 @@ export default class Input {
       onEmpty: messages?.onEmpty || 'The field must not be empty'
     }
     this._onInput = onInput
+    this._lastIncorrectValue = null
     this._validatingCallback = validatingCallback
     this._initInputListener()
     this._initChangeListener()
   }
 
   validate() {
-    if (!this.isValid()) {
+    if (!this.isValid() && !this.isEmpty()) {
+      this._lastIncorrectValue = this.value
       this._setMessage(this._messages.onInvalid)
+      this._showMessage()
     } else {
-      this._removeMessage()
+      this._hideMessage()
     }
+  }
+
+  get value() {
+    return this._input.value
   }
 
   showMessageAboutEmptyInput() {
     this._setMessage(this._messages.onEmpty)
+    this._showMessage()
   }
 
   isValid() {
-    return this._validatingCallback(this._input.value)
+    return this._validatingCallback(this.value)
   }
 
   isEmpty() {
-    return this._input.value === ''
+    return this.value === ''
   }
 
   _setMessage(message: string) {
     this._root.dataset.message = message
   }
 
-  _removeMessage() {
-    delete this._root.dataset.message
+  _showMessage() {
+    this._root.classList.add('show-message')
+  }
+
+  _hideMessage() {
+    this._root.classList.remove('show-message')
   }
 
   _initInputListener() {
     this._input.addEventListener('input', () => {
-      this._removeMessage.bind(this)
+      if (this.value === this._lastIncorrectValue) {
+        this._setMessage(this._messages.onInvalid)
+        this._showMessage()
+      } else {
+        this._hideMessage()
+      }
       if (this._onInput) {
         this._onInput()
       }

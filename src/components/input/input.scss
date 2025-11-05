@@ -8,6 +8,21 @@
   flex-direction: column;
   width: 100%;
 
+  &.show-message {
+    &:before {
+      visibility: visible;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+      opacity: 1;
+    }
+
+    &:after {
+      clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 100% 100%);
+      opacity: 0;
+      transition: clip-path 0s ease;
+    }
+  }
+
+  &:before,
   &:after {
     content: attr(data-message);
     position: absolute;
@@ -20,6 +35,20 @@
     color: map.get(v.$color, grey, 100);
     background-color: map.get(v.$color, black, 100);
     font-size: 12px;
+  }
+
+  &:before {
+    visibility: hidden;
+    clip-path: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+    transition:
+      clip-path 300ms ease,
+      opacity 300ms ease;
+  }
+
+  &:after {
+    clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
+    opacity: 1;
+    transition: clip-path 300ms ease;
   }
 
   &__field {

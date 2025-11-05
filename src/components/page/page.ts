@@ -118,6 +118,9 @@ export default class Page {
             return true
           }
         }
+      },
+      onSubmit: () => {
+        console.log('Sending form')
       }
     })
   }

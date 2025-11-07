@@ -39,7 +39,7 @@ export default class Page {
   }
 
   _initFooter() {
-    const footer = this._root.querySelector('.js-header')
+    const footer = this._root.querySelector('.js-footer')
     if (footer instanceof HTMLElement) {
       this._footer = new Footer({ root: footer })
     }

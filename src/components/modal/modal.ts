@@ -24,11 +24,13 @@ export default class Modal {
   }
 
   toggle(force: boolean) {
-    this._root.classList.toggle('open', force)
     const toggleEventListener = force
       ? document.addEventListener
       : document.removeEventListener
-    toggleEventListener('click', this._handleOutsideClick)
+    setTimeout(() => {
+      this._root.classList.toggle('open', force)
+      toggleEventListener('click', this._handleOutsideClick)
+    })
   }
 
   setHeaderMinHeight(minHeight: number) {
@@ -53,6 +55,7 @@ export default class Modal {
 
   _initCloseButton() {
     const closeButton = this._root.querySelector('.js-close-button')
+    console.log(closeButton)
     if (closeButton) {
       closeButton.addEventListener('click', this.close.bind(this))
     }

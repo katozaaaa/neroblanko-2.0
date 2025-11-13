@@ -11,13 +11,10 @@
   height: 100%;
   background-color: map.get(v.$color, black, 100);
   pointer-events: none;
-  clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
-  transition: clip-path 1000ms ease-out;
 
   &.open {
     visibility: visible;
     pointer-events: all;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
   }
 
   &__container {

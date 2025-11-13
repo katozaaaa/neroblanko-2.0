@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "glob": "^11.0.3",
+    "gsap": "^3.13.0",
     "jiti": "^2.6.1",
     "picocolors": "^1.1.1"
   }

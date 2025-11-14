@@ -6,7 +6,7 @@ interface ModalOptions {
 
 export default class Modal {
   _root: HTMLElement
-  _animation: gsap.core.Tween | null
+  _animation: gsap.core.Tween
 
   constructor(options: ModalOptions) {
     const { root } = options
@@ -14,8 +14,8 @@ export default class Modal {
       throw new Error('No root element found')
     }
     this._root = root
-    this._animation = null
     this._handleOutsideClick = this._handleOutsideClick.bind(this)
+    this._animation = this._setUpAnimation()
     this._initCloseButton()
   }
 
@@ -29,32 +29,9 @@ export default class Modal {
 
   toggle(force: boolean) {
     if (force) {
-      if (!this._animation) {
-        this._animation = gsap.fromTo(
-          this._root,
-          {
-            clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)'
-          },
-          {
-            duration: 0.6,
-            clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-            onStart: () => {
-              this._root.classList.add('open')
-              document.addEventListener('click', this._handleOutsideClick)
-            },
-            onReverseComplete: () => {
-              this._root.classList.remove('open')
-              document.removeEventListener('click', this._handleOutsideClick)
-            }
-          }
-        )
-      } else {
-        this._animation.play()
-      }
+      this._animation.timeScale(1).play()
     } else {
-      if (this._animation) {
-        this._animation.reverse()
-      }
+      this._animation.timeScale(2).reverse()
     }
   }
 
@@ -70,6 +47,28 @@ export default class Modal {
     if (body instanceof HTMLElement) {
       body.style.paddingTop = topOffset + 'px'
     }
+  }
+
+  _setUpAnimation() {
+    return gsap.fromTo(
+      this._root,
+      {
+        clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)'
+      },
+      {
+        duration: 0.6,
+        clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
+        paused: true,
+        onStart: () => {
+          this._root.classList.add('open')
+          document.addEventListener('click', this._handleOutsideClick)
+        },
+        onReverseComplete: () => {
+          this._root.classList.remove('open')
+          document.removeEventListener('click', this._handleOutsideClick)
+        }
+      }
+    )
   }
 
   _handleOutsideClick(e: MouseEvent) {

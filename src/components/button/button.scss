@@ -15,7 +15,6 @@
   cursor: pointer;
 
   @include m.font-styles(h1);
-  @include m.underline-animation;
 
   &[disabled='disabled'],
   &:disabled {

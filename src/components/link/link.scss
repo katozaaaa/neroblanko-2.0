@@ -19,8 +19,6 @@
     cursor: not-allowed;
   }
 
-  @include m.underline-animation;
-
   svg {
     width: 0.8em;
     aspect-ratio: 1;

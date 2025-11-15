@@ -30,9 +30,11 @@
   }
 
   &__title {
-    span {
-      display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
+    span {
       &:nth-child(2) {
         color: map.get(v.$color, grey, 100);
       }

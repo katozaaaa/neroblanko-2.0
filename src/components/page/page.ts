@@ -1,4 +1,5 @@
 import '@/main'
+import UnderlinedText from '@components/underlinedText/underlinedText'
 import Header from '@components/header/header'
 import Footer from '@components/footer/footer'
 import Aside from '@components/aside/aside'
@@ -29,6 +30,7 @@ export default class Page {
     this._initAside()
     this._initContactModal()
     this._initContactForm()
+    this._initUnderlinedText()
   }
 
   _initHeader() {
@@ -121,6 +123,14 @@ export default class Page {
       },
       onSubmit: () => {
         console.log('Sending form')
+      }
+    })
+  }
+
+  _initUnderlinedText() {
+    this._root.querySelectorAll('.js-underlined-text').forEach((element) => {
+      if (element instanceof HTMLElement) {
+        new UnderlinedText({ root: element })
       }
     })
   }

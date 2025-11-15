@@ -1,4 +1,4 @@
 mixin button(options)
   - const { href } = attributes
-  #{href ? 'a' : 'button'}.button&attributes(attributes)
+  #{href ? 'a' : 'button'}.button.underlined-text.js-underlined-text&attributes(attributes)
     block

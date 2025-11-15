@@ -1,7 +1,10 @@
 {
-  "name": "vite-project",
+  "name": "neroblanko-2.0",
   "private": true,
   "version": "0.0.0",
+  "engines": {
+    "node": "24.9.0"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",

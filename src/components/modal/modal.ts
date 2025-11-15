@@ -29,9 +29,9 @@ export default class Modal {
 
   toggle(force: boolean) {
     if (force) {
-      this._animation.timeScale(1).play()
+      this._animation.play()
     } else {
-      this._animation.timeScale(2).reverse()
+      this._animation.reverse()
     }
   }
 
@@ -56,7 +56,7 @@ export default class Modal {
         clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)'
       },
       {
-        duration: 0.6,
+        duration: 0.3,
         clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
         paused: true,
         onStart: () => {

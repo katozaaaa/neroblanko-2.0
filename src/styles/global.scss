@@ -2,6 +2,12 @@
 @use 'variables' as v;
 @use 'mixins' as m;
 
+html {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 body {
   display: flex;
   flex-direction: column;

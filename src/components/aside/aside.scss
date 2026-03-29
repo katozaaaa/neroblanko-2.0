@@ -3,14 +3,29 @@
 @use '../../styles/mixins' as m;
 
 .aside {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-  padding-block: 30px;
+  container-type: inline-size;
 
-  &__text {
-    max-width: 312px;
+  &__container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    padding-block: 30px;
+
+    @container (max-width: 600px) {
+      flex-direction: column;
+    }
+  }
+
+  &__sub-container {
+    display: flex;
+    flex-direction: column;
+    gap: inherit;
+    flex: 0 0 381px;
+
+    @container (max-width: 600px) {
+      flex: unset;
+    }
   }
 
   &__image {

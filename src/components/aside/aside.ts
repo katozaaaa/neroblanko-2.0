@@ -12,13 +12,4 @@ export default class Footer {
     }
     this._root = root
   }
-
-  get imageTopPosition() {
-    const image = document.querySelector('.js-aside-image')
-    if (image instanceof HTMLElement) {
-      return image.offsetTop
-    } else {
-      throw new Error('No image element found')
-    }
-  }
 }

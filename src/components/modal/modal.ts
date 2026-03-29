@@ -3,8 +3,8 @@ import { gsap } from 'gsap'
 type ModalWidth = number | string
 
 interface ModalOptions {
-  root: HTMLElement,
-  width?: ModalWidth | (() => ModalWidth),
+  root: HTMLElement
+  width?: ModalWidth | (() => ModalWidth)
 }
 
 export default class Modal {
@@ -24,7 +24,8 @@ export default class Modal {
 
       if (typeof this._width !== 'function') {
         const width = this._width
-        this._root.style.width = typeof width === 'string' ? width : `${width}px`
+        this._root.style.width =
+          typeof width === 'string' ? width : `${width}px`
       }
     }
 
@@ -39,10 +40,13 @@ export default class Modal {
       this._root.style.width = typeof width === 'string' ? width : `${width}px`
     }
 
+    document.documentElement.style.overflow = 'hidden'
+
     this.toggle(true)
   }
 
   close() {
+    document.documentElement.style.overflow = ''
     this.toggle(false)
   }
 
@@ -58,13 +62,6 @@ export default class Modal {
     const header = this._root.querySelector('.js-modal-header')
     if (header instanceof HTMLElement) {
       header.style.minHeight = minHeight + 'px'
-    }
-  }
-
-  setBodyInnerTopOffset(topOffset: number) {
-    const body = this._root.querySelector('.js-modal-body')
-    if (body instanceof HTMLElement) {
-      body.style.paddingTop = topOffset + 'px'
     }
   }
 

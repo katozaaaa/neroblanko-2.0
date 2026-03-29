@@ -67,20 +67,24 @@ export default class Page {
         const isMobile = window.innerWidth <= 767
 
         if (isMobile) {
-          return "100vw"
+          return '100vw'
         }
-
 
         const main = this._root.querySelector('.js-page-main')
         const pageContainer = this._root.querySelector('.js-page-container')
 
         let width: string | undefined = undefined
-        if (main instanceof HTMLElement && pageContainer instanceof HTMLElement) {
+        if (
+          main instanceof HTMLElement &&
+          pageContainer instanceof HTMLElement
+        ) {
           const rootWidth = this._root.clientWidth
           const containerWidth = pageContainer.clientWidth
           const containerComputedStyles = window.getComputedStyle(pageContainer)
-          const containerRowGap = containerComputedStyles.getPropertyValue('row-gap')
-          const containerRightPadding = containerComputedStyles.getPropertyValue('padding-right')
+          const containerRowGap =
+            containerComputedStyles.getPropertyValue('row-gap')
+          const containerRightPadding =
+            containerComputedStyles.getPropertyValue('padding-right')
 
           width = `calc(
             ${main.clientWidth}px + 
@@ -123,10 +127,8 @@ export default class Page {
         return
       }
       const headerHeight = this._header?.height
-      const asideImageTopPosition = this._aside?.imageTopPosition
-      if (headerHeight && asideImageTopPosition) {
+      if (headerHeight) {
         this._contactModal.setHeaderMinHeight(headerHeight)
-        this._contactModal.setBodyInnerTopOffset(asideImageTopPosition)
       }
     } catch (error) {
       console.error(error)

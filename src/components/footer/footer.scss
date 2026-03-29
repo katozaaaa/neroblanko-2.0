@@ -5,5 +5,9 @@
   &__wrapper {
     padding-top: 350px;
     border-top: 1px solid map.get(v.$color, grey, 200);
+
+    @media (max-width: 768px) {
+      padding-top: 175px;
+    }
   }
 }

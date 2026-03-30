@@ -11,7 +11,6 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  padding-block: 1.25rem;
   min-height: 100svh;
   box-sizing: border-box;
   color: map.get(v.$color, white, 100);

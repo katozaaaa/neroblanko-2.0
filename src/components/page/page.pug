@@ -15,28 +15,31 @@ mixin page(options)
         link(rel='stylesheet', href='css/styles.min.css')
 
     body.page.js-page-root
-      +header
+      #smooth-wrapper
+        #smooth-content
+          .page__container
+            +header(data-lag='0.5')
 
-      .container.page__container.js-page-container
-        .page__aside-wrapper
-          +aside.page__aside
+            .container.page__content-wrapper.js-page-content-wrapper
+              .page__aside-wrapper
+                +aside.page__aside(data-speed='clamp(0.7)')
 
-        .page__content-wrapper
-          main.main.page__main.js-page-main
-            block
+              .page__main-wrapper
+                main.main.page__main.js-page-main
+                  block
 
-            if process.env.NODE_ENV === 'production'
-              script(
-                type='module',
-                data-script=`./js/${options.basename}.bundle.js`
-              )
-            else
-              script(
-                type='module',
-                src=`../../pages/${options.basename}/${options.basename}.ts`
-              )
+                  if process.env.NODE_ENV === 'production'
+                    script(
+                      type='module',
+                      data-script=`./js/${options.basename}.bundle.js`
+                    )
+                  else
+                    script(
+                      type='module',
+                      src=`../../pages/${options.basename}/${options.basename}.ts`
+                    )
 
-          +footer
+                +footer
 
       +modal.js-contact-modal.page__contact-modal
         +form.js-contact-form.page__contact-modal-form

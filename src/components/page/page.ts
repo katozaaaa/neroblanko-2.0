@@ -6,6 +6,11 @@ import Aside from '@components/aside/aside'
 import Modal from '@components/modal/modal'
 import Form from '@components/form/form'
 import { pxToRem, toRemLength } from '@scripts/utils/units'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ScrollSmoother } from 'gsap/ScrollSmoother'
+
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
 interface PageOptions {
   root?: HTMLElement
@@ -32,6 +37,7 @@ export default class Page {
     this._initContactModal()
     this._initContactForm()
     this._initUnderlinedText()
+    this._initScrollScmoother()
   }
 
   _initHeader() {
@@ -73,16 +79,19 @@ export default class Page {
         }
 
         const main = this._root.querySelector('.js-page-main')
-        const pageContainer = this._root.querySelector('.js-page-container')
+        const contentWrapper = this._root.querySelector(
+          '.js-page-content-wrapper'
+        )
 
         let width: string | undefined = undefined
         if (
           main instanceof HTMLElement &&
-          pageContainer instanceof HTMLElement
+          contentWrapper instanceof HTMLElement
         ) {
           const rootWidth = this._root.clientWidth
-          const containerWidth = pageContainer.clientWidth
-          const containerComputedStyles = window.getComputedStyle(pageContainer)
+          const containerWidth = contentWrapper.clientWidth
+          const containerComputedStyles =
+            window.getComputedStyle(contentWrapper)
           const containerRowGap =
             containerComputedStyles.getPropertyValue('row-gap')
           const containerRightPadding =
@@ -174,6 +183,14 @@ export default class Page {
       if (element instanceof HTMLElement) {
         new UnderlinedText({ root: element })
       }
+    })
+  }
+
+  _initScrollScmoother() {
+    ScrollSmoother.create({
+      smooth: 2,
+      speed: 0.7,
+      effects: true
     })
   }
 }
